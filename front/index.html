@@ -14,7 +14,7 @@
         <form id="myForm">
             <label for="inputText">入力してください:</label>
             <input type="text" id="inputText" placeholder="ここに入力">
-            <button type="button" onclick="showResult()">送信</button>
+            <button type="button" onclick="showResult();postData('/get_chatgpt_response')">送信</button>
         </form>
         <div id="result"></div>
         <button type="button" onclick="redirectUrl('ranking')">ランキングへ遷移</button>
@@ -28,6 +28,28 @@
         }
         function redirectUrl(url) {
             window.location.href = url;
+        }
+        // 送信するJSONデータ
+        // POSTリクエストを送信する関数
+        function postData(url) {
+            var data = {
+                question: document.getElementById('inputText').value
+            };
+
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     </script>
 </body>
