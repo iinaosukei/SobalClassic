@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同時接続数をカウントするページ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        #active-status {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>同時接続数をカウントするページ</h1>
+        <input type="text" id="inputText" placeholder="ここに入力">
+        <button onclick="submitInput()">送信</button>
+        <div id="result"></div>
+        <div id="active-status"></div>
+    </div>
+
+    <script>
+        var connectionCount = 0;
+
+        function submitInput() {
+            var inputText = document.getElementById('inputText').value;
+            var resultDiv = document.getElementById('result');
+            var activeStatusDiv = document.getElementById('active-status');
+
+            // 入力内容を表示
+            resultDiv.innerHTML = '入力内容: ' + inputText;
+        }
+    </script>
+</body>
+
+</html>

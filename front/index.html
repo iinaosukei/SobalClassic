@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="front/css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>誉めてみて</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>誉めてみて</h1>
+        <form id="myForm">
+            <label for="inputText">入力してください:</label>
+            <input type="text" id="inputText" placeholder="ここに入力">
+            <button type="button" onclick="showResult()">送信</button>
+        </form>
+        <div id="result"></div>
+        <button type="button" onclick="redirectUrl('ranking')">ランキングへ遷移</button>
+        <button type="button" onclick="redirectUrl('battle')">バトルへ遷移</button>
+    </div>
+
+    <script>
+        function showResult() {
+            var inputValue = document.getElementById('inputText').value;
+            document.getElementById('result').innerHTML = '入力された文字列: ' + inputValue;
+        }
+        function redirectUrl(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>
