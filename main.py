@@ -30,9 +30,7 @@ def get_chatgpt_response(character):
     chatgpt_response = _generate_chatgpt_response(user_question, character)
     return json.dumps(chatgpt_response)
 
-def _get_tamura_text():
-    file_path = 'memo.txt'
-
+def _get_tamura_text(file_path):
     # ファイルを読み込みモードで開く
     with open(file_path, 'r', encoding='utf-8') as file:
         # ファイルの中身を文字列として取得
@@ -43,11 +41,11 @@ def _generate_chatgpt_response(user_question, character):
     # ここのif文内で好きな人格に変更する
     # character_promptは仮の変数
     if character == 'T1':
-        character_prompt = 'You are Son Goku from Dragon Ball. Please answer in the tone of Goku. The first person is "オラ".'
+        file_path = 'tamura.txt'
     elif character == 'T2':
-        character_prompt = 'あなたは陽気な関西人です. 関西弁で回答してください。一人称は"ワイ"です。'
+        file_path = 'takazawa.txt'
     else:
-        character_prompt = 'You are Arabic. Please rate my compliments in Arabic.'
+        file_path = 'furumoto.txt'
 
     prompt = (f'Score the following compliments on a 10-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str. detailed_evaluation_criteria is in Japanese.')
     url = 'https://api.openai.com/v1/chat/completions'
@@ -60,7 +58,7 @@ def _generate_chatgpt_response(user_question, character):
         'model': 'gpt-3.5-turbo',
         'messages': [{
                         'role': 'system',
-                        'content': _get_tamura_text()
+                        'content': _get_tamura_text(file_path)
                      },
                      {
                         'role': 'user',
