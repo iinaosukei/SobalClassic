@@ -14,17 +14,17 @@
         <form id="myForm">
             <label for="inputText">入力してください:</label>
             <input type="text" id="inputText" placeholder="ここに入力">
-            <button type="button" onclick="showResult();postData('/get_chatgpt_response')">送信</button>
+            <button type="button" onclick="showResult()">送信</button>
         </form>
-        <div id="result"></div>
+        <div id="pointResult"></div>
+        <div id="textResult"></div>
         <button type="button" onclick="redirectUrl('ranking')">ランキングへ遷移</button>
         <button type="button" onclick="redirectUrl('battle')">バトルへ遷移</button>
     </div>
 
     <script>
-        function showResult() {
-            var inputValue = document.getElementById('inputText').value;
-            document.getElementById('result').innerHTML = '入力された文字列: ' + inputValue;
+        async function showResult() {
+            await postData('/get_chatgpt_response');
         }
         function redirectUrl(url) {
             window.location.href = url;
@@ -45,7 +45,9 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Success:', data);
+                    json_data = JSON.parse(data)
+                    document.getElementById('pointResult').innerText = `点数: ${json_data.point}`;
+                    document.getElementById('textResult').innerText = `評価: ${json_data.detailed_evaluation_criteria}`;
                 })
                 .catch(error => {
                     console.error('Error:', error);

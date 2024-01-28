@@ -5,7 +5,7 @@ import json
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 GET_THEME_PROMPT = 'Think of an appropriate situation.Be sure to return it in json format.situation:str The content of str is in Japanese.'
-#CHATGPT_API_KEY = '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'
+# CHATGPT_API_KEY = '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'
 CHATGPT_API_KEY = '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'
 
 @app.route('/')
@@ -30,7 +30,7 @@ def get_chatgpt_response():
 
 
 def _generate_chatgpt_response(user_question):
-    prompt = (f'Score the following compliments on a 100-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str')
+    prompt = (f'Score the following compliments on a 100-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str. detailed_evaluation_criteria is in Japanese.')
     url = 'https://api.openai.com/v1/chat/completions'
 
     headers = {
@@ -40,7 +40,6 @@ def _generate_chatgpt_response(user_question):
     data = {
         'model': 'gpt-3.5-turbo',
         'messages': [{'role': 'user', 'content': prompt}],
-        'max_tokens': 50
     }
     response = requests.post(url, json=data, headers=headers)
     print(response.json())
