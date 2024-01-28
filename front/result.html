@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="front/css/ranking.css">
+    <title>結果発表!!!</title>
+</head>
+
+<body>
+
+    <div id="result"></div>
+
+    <script>
+        var sessionData = sessionStorage.getItem('result');
+        let img = document.createElement("img");
+        console.log(sessionData);
+        if (sessionData >= 30) {
+            img.setAttribute("src", "/static/images/成功_正方形.png");
+        } else {
+            img.setAttribute("src", "/static/images/失敗_正方形.png");
+        }
+        document.getElementById('result').append(img);
+    </script>
+
+</body>
+
+</html>

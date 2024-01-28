@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="front/css/index.css">
+    <script src="front/js/homeru.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>誉めてみて</title>
 </head>
@@ -12,69 +13,25 @@
     <div class="container">
         <h1>誉めてみて</h1>
         <h2>人格設定変更:</h2>
-            <input type="radio" id="T1" name="options" value="T1" checked="checked">
-            <label for="option1">T1</label><br>
+        <input type="radio" id="T1" name="options" value="T1" checked="checked">
+        <label for="option1">T1</label><br>
 
-            <input type="radio" id="T2" name="options" value="T2">
-            <label for="option2">T2</label><br>
+        <input type="radio" id="T2" name="options" value="T2">
+        <label for="option2">T2</label><br>
 
-            <input type="radio" id="F" name="options" value="F">
-            <label for="option3">F</label><br>
+        <input type="radio" id="F" name="options" value="F">
+        <label for="option3">F</label><br>
         <form id="myForm">
             <label for="inputText">褒め言葉を入力してください:</label>
             <input type="text" id="inputText" placeholder="ここに入力">
-            <button type="button" onclick="showResult()">送信</button>
+            <button id="submit" type="button" onclick="showApiResult()">送信</button>
         </form>
         <div id="pointResult"></div>
         <div id="textResult"></div>
         <div id="totalPoints"></div>
+        <div id="count"></div>
+        <div id="resultButton"></div>
     </div>
-
-    <script>
-        async function showResult() {
-            // ラジオボタンの要素を取得
-            const radioButtons = document.getElementsByName('options');
-
-            // 選択されているラジオボタンの値を見つける
-            let selectedValue;
-            radioButtons.forEach(radioButton => {
-                if (radioButton.checked) {
-                    selectedValue = radioButton.value;
-                }
-            });
-
-            const url = '/get_chatgpt_response/' + selectedValue
-            await postData(url);
-        }
-        function redirectUrl(url) {
-            window.location.href = url;
-        }
-        // 送信するJSONデータ
-        // POSTリクエストを送信する関数
-        function postData(url) {
-            var data = {
-                question: document.getElementById('inputText').value
-            };
-
-            return fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    json_data = JSON.parse(data)
-                    document.getElementById('pointResult').innerText = `点数: ${json_data.point}`;
-                    document.getElementById('textResult').innerText = `評価: ${json_data.detailed_evaluation_criteria}`;
-                    document.getElementById('totalPoints').innerText= `合計得点: ${json_data.total_points}`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-    </script>
 </body>
 
 </html>

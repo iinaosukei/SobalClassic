@@ -7,19 +7,18 @@ app.secret_key = 'your_secret_key'
 
 GET_THEME_PROMPT = 'Think of an appropriate situation.Be sure to return it in json format.situation:str The content of str is in Japanese.'
 # CHATGPT_API_KEY = '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'
-CHATGPT_API_KEY = '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'
+CHATGPT_API_KEY = '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'
 
 @app.route('/')
 def index():
     # 合計得点の初期値を設定
-    if 'totalPoints' not in session:
-        session['totalPoints'] = 0
+    session['totalPoints'] = 0
 
     return app.send_static_file('front/index.html')
 
-@app.route('/ranking')
+@app.route('/result')
 def ranking():
-    return app.send_static_file('front/ranking.html')
+    return app.send_static_file('front/result.html')
 
 @app.route('/battle')
 def battle():
