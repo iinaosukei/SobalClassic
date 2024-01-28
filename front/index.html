@@ -18,13 +18,32 @@
         </form>
         <div id="pointResult"></div>
         <div id="textResult"></div>
-        <button type="button" onclick="redirectUrl('ranking')">ランキングへ遷移</button>
-        <button type="button" onclick="redirectUrl('battle')">バトルへ遷移</button>
+        <h2>人格設定変更:</h2>
+            <input type="radio" id="T1" name="options" value="T1" checked="checked">
+            <label for="option1">T1</label><br>
+
+            <input type="radio" id="T2" name="options" value="T2">
+            <label for="option2">T2</label><br>
+
+            <input type="radio" id="F" name="options" value="F">
+            <label for="option3">F</label><br>
     </div>
 
     <script>
         async function showResult() {
-            await postData('/get_chatgpt_response');
+            // ラジオボタンの要素を取得
+            const radioButtons = document.getElementsByName('options');
+
+            // 選択されているラジオボタンの値を見つける
+            let selectedValue;
+            radioButtons.forEach(radioButton => {
+                if (radioButton.checked) {
+                    selectedValue = radioButton.value;
+                }
+            });
+
+            const url = '/get_chatgpt_response/' + selectedValue
+            await postData(url);
         }
         function redirectUrl(url) {
             window.location.href = url;

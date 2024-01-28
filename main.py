@@ -6,7 +6,7 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 
 GET_THEME_PROMPT = 'Think of an appropriate situation.Be sure to return it in json format.situation:str The content of str is in Japanese.'
 # CHATGPT_API_KEY = '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'
-CHATGPT_API_KEY = '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'
+CHATGPT_API_KEY = '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'
 
 @app.route('/')
 def index():
@@ -20,12 +20,14 @@ def ranking():
 def battle():
     return app.send_static_file('front/battle.html')
 
-@app.route('/get_chatgpt_response', methods=['POST'])
-def get_chatgpt_response():
+@app.route('/get_chatgpt_response/<character>', methods=['POST'])
+def get_chatgpt_response(character):
     # 呼ぶと採点される
     # 形式：'question': text
+
+    print(character)
     user_question = request.json['question']
-    chatgpt_response = _generate_chatgpt_response(user_question)
+    chatgpt_response = _generate_chatgpt_response(user_question, character)
     return json.dumps(chatgpt_response)
 
 def _get_tamura_text():
@@ -37,8 +39,17 @@ def _get_tamura_text():
         file_content = file.read()
     return file_content
 
-def _generate_chatgpt_response(user_question):
-    prompt = (f'Score the following compliments on a 100-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str. detailed_evaluation_criteria is in Japanese.')
+def _generate_chatgpt_response(user_question, character):
+    # ここのif文内で好きな人格に変更する
+    # character_promptは仮の変数
+    if character == 'T1':
+        character_prompt = 'You are Son Goku from Dragon Ball. Please answer in the tone of Goku. The first person is "オラ".'
+    elif character == 'T2':
+        character_prompt = 'あなたは陽気な関西人です. 関西弁で回答してください。一人称は"ワイ"です。'
+    else:
+        character_prompt = 'You are Arabic. Please rate my compliments in Arabic.'
+
+    prompt = (f'Score the following compliments on a 10-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str. detailed_evaluation_criteria is in Japanese.')
     url = 'https://api.openai.com/v1/chat/completions'
 
     headers = {
