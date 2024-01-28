@@ -28,6 +28,14 @@ def get_chatgpt_response():
     chatgpt_response = _generate_chatgpt_response(user_question)
     return json.dumps(chatgpt_response)
 
+def _get_tamura_text():
+    file_path = 'memo.txt'
+
+    # ファイルを読み込みモードで開く
+    with open(file_path, 'r', encoding='utf-8') as file:
+        # ファイルの中身を文字列として取得
+        file_content = file.read()
+    return file_content
 
 def _generate_chatgpt_response(user_question):
     prompt = (f'Score the following compliments on a 100-point scale, indicating the score only. The rating is dry.「{user_question}」Be sure to use the json format, and be sure to display only the following:point:int, detailed_evaluation_criteria:str. detailed_evaluation_criteria is in Japanese.')
@@ -41,8 +49,7 @@ def _generate_chatgpt_response(user_question):
         'model': 'gpt-3.5-turbo',
         'messages': [{
                         'role': 'system',
-                        'content':
-                        '' ## ここにキャラの指示を入れる
+                        'content': _get_tamura_text()
                      },
                      {
                         'role': 'user',
