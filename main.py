@@ -39,7 +39,15 @@ def _generate_chatgpt_response(user_question):
     }
     data = {
         'model': 'gpt-3.5-turbo',
-        'messages': [{'role': 'user', 'content': prompt}],
+        'messages': [{
+                        'role': 'system',
+                        'content':
+                        '' ## ここにキャラの指示を入れる
+                     },
+                     {
+                        'role': 'user',
+                        'content': prompt
+                     }],
     }
     response = requests.post(url, json=data, headers=headers)
     print(response.json())
