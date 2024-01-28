@@ -11,13 +11,6 @@
 <body>
     <div class="container">
         <h1>誉めてみて</h1>
-        <form id="myForm">
-            <label for="inputText">入力してください:</label>
-            <input type="text" id="inputText" placeholder="ここに入力">
-            <button type="button" onclick="showResult()">送信</button>
-        </form>
-        <div id="pointResult"></div>
-        <div id="textResult"></div>
         <h2>人格設定変更:</h2>
             <input type="radio" id="T1" name="options" value="T1" checked="checked">
             <label for="option1">T1</label><br>
@@ -27,6 +20,13 @@
 
             <input type="radio" id="F" name="options" value="F">
             <label for="option3">F</label><br>
+        <form id="myForm">
+            <label for="inputText">褒め言葉を入力してください:</label>
+            <input type="text" id="inputText" placeholder="ここに入力">
+            <button type="button" onclick="showResult()">送信</button>
+        </form>
+        <div id="pointResult"></div>
+        <div id="textResult"></div>
     </div>
 
     <script>
