@@ -27,6 +27,7 @@
         </form>
         <div id="pointResult"></div>
         <div id="textResult"></div>
+        <div id="totalPoints"></div>
     </div>
 
     <script>
@@ -67,6 +68,7 @@
                     json_data = JSON.parse(data)
                     document.getElementById('pointResult').innerText = `点数: ${json_data.point}`;
                     document.getElementById('textResult').innerText = `評価: ${json_data.detailed_evaluation_criteria}`;
+                    document.getElementById('totalPoints').innerText= `合計得点: ${json_data.total_points}`;
                 })
                 .catch(error => {
                     console.error('Error:', error);

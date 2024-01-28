@@ -1,15 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, session
 import requests
 import json
 
 app = Flask(__name__, static_folder='.', static_url_path='')
+app.secret_key = 'your_secret_key'
 
 GET_THEME_PROMPT = 'Think of an appropriate situation.Be sure to return it in json format.situation:str The content of str is in Japanese.'
 # CHATGPT_API_KEY = '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'
-CHATGPT_API_KEY = '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'
+CHATGPT_API_KEY = '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'
 
 @app.route('/')
 def index():
+    # 合計得点の初期値を設定
+    if 'totalPoints' not in session:
+        session['totalPoints'] = 0
+
     return app.send_static_file('front/index.html')
 
 @app.route('/ranking')
@@ -74,6 +79,12 @@ def _generate_chatgpt_response(user_question, character):
     content_json = json.loads(content)
     print (content_json['point'])
     print (content_json['detailed_evaluation_criteria'])
+
+    # 合計点数を記録
+    session['totalPoints'] += content_json['point']
+    content_json['total_points'] = session['totalPoints']
+    response_json['choices'][0]['message']['content'] = json.dumps(content_json)
+
     return response_json['choices'][0]['message']['content'].strip()
 
 app.run(port=8000, debug=True)
